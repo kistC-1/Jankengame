@@ -1,0 +1,2 @@
+# Jankengame
+ジャンケンゲームC班
