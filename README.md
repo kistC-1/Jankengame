@@ -23,6 +23,7 @@ Jankengame
 ### 開発環境 ###
 ------
 + Java（ジャンケンゲームプログラム）
-
++ Illustrator CC (画像編集)
++ Photoshop (画像編集)
 
 (仮)
