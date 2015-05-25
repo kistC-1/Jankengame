@@ -25,3 +25,9 @@ Jankengame
 + Java（ジャンケンゲームプログラム）
 + Illustrator CC (画像編集)
 + Photoshop (画像編集)
+
+
+### 参考資料 ###
+------
++ 画像:http://boom-app.com/entry/jankenclassic
++ Javaゲームプログラミング（仮）
