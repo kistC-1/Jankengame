@@ -6,18 +6,26 @@
 import java.applet.Applet;
 import java.awt.*;
 import java.awt.event.*;
-import java.util.Scanner;
 import java.util.Random;
 
-public class Jankengame extends Applet {
-	
-	Image[] compG, frame;
+
+public class Jankengame extends Applet implements ActionListener {
+	Image[] frame, compG;
+	Button gu, tyoki, pa;
+	int user, comp;
+	int win = 0, lose = 0;
 	
 	//アプレットの初期化
 	public void init() {
 		//アプレットの背景色の指定
 		setBackground(new Color(255, 255, 255));
-
+		
+		//フレーム
+		frame = new Image[3];
+		frame[0]  = getImage(getDocumentBase(), "../img/frame_normal.png");	//通常
+		frame[1]  = getImage(getDocumentBase(), "../img/frame_win.png");	//勝ち
+		frame[2]  = getImage(getDocumentBase(), "../img/frame_lose.png");	//負け
+		
 		//コンピュータの手
 		compG = new Image[4];
 		compG[0] = getImage(getDocumentBase(), "../img/gu.png");		//グー
@@ -25,58 +33,75 @@ public class Jankengame extends Applet {
 		compG[2] = getImage(getDocumentBase(), "../img/pa.png");		//パー
 		compG[3] = getImage(getDocumentBase(), "../img/random.gif");	//ランダム
 		
-		//フレーム(ユーザーの手)
-		frame = new Image[4];
-		frame[0] = getImage(getDocumentBase(), "../img/");			//グー
-		frame[1] = getImage(getDocumentBase(), "../img/");			//チョキ
-		frame[2] = getImage(getDocumentBase(), "../img/");			//パー
-		frame[3] = getImage(getDocumentBase(), "../img/pa.png");	//ノーマル
+		//ユーザの手(ボタン)
+		gu  = new Button("グー");
+		tyoki = new Button("チョキ");
+		pa = new Button("パー");
+		
+		//ボタンのレイアウト
+		setLayout(null);
+		add(gu);
+		add(tyoki);
+		add(pa);
+		
+		//ボタンの位置
+		gu.setBounds(20,800,60,20);
+		tyoki.setBounds(90,800,60,20);
+		pa.setBounds(160,800,60,20);
+		
+		//ActionListenerを登録
+		gu.addActionListener(this);
+		tyoki.addActionListener(this);
+		pa.addActionListener(this);
 	}
 	
 	
 	//画像の描画
 	public void paint(Graphics g) {
-		Scanner stdIn = new Scanner(System.in);
 		Random rand = new Random();
-		
-		g.drawImage(frame, 0, 0, this);
-		g.drawImage(random, 0, -103, this);
-		
-		int win = 0, rose = 0;
 		
 		// 3回勝負
 		for (int count = 0; count < 3; count++) {
-			// コンピュータの手を生成
-			int comp = rand.nextInt(3);
+			g.drawImage(frame[0], 0, 0, this);
+			g.drawImage(compG[3], 0, -103, this);
 			
 			// プレイヤーの手を読み込む
-			int user;
-//			do {
-//				user = stdIn.nextInt();
-//			} while (user < 0 || user > 2);
-//			
-			//手を表示
+			
+			
+			// コンピュータの手を生成
+			comp = rand.nextInt(3);		
 			g.drawImage(compG[comp], 0, -103, this);
-//			//g.drawImage(userG[user], 0, 0, this);
-//			
+			
 			// 判定
 //			int judge = (comp - user + 3) % 3;
 //			switch (judge) {
-//			case 0: break;				//あいこ
-//			case 1: win++;		break;	//勝ち
-//			case 2: rose++;		break;	//負け
+//			case 0: break;
+//			case 1: win++;		break;
+//			case 2: lose++;		break;
 //			}
 		}
-//		
+		
 		// 結果
-//		if (win > rose)
+//		if (win > lose) {
+//			g.drawImage(frame[1], 0, 0, this);
 //			g.drawString("win",150,140); 
-//		else if (win < rose)
-//			g.drawString("rose",150,140); 
+//		}
+//		else if (win < lose) {
+//			g.drawImage(frame[2], 0, 0, this);
+//			g.drawString("lose",150,140); 
+//		}
 //		else
 //			g.drawString("draw",150,140); 
-//		
-//		
-//		stdIn.close();
+	}
+
+	public void actionPerformed(ActionEvent e) {
+		if(e.getSource() == gu)
+			user = 0;
+		else if(e.getSource() == tyoki)
+			user = 1;
+		else if(e.getSource() == pa)
+			user = 2;			
 	}
 }
+
+
