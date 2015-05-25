@@ -11,28 +11,26 @@ import java.util.Random;
 
 public class Jankengame extends Applet {
 	
-	Image random, frame;
-	Image[] compG, userG;
+	Image[] compG, frame;
 	
 	//アプレットの初期化
 	public void init() {
 		//アプレットの背景色の指定
 		setBackground(new Color(255, 255, 255));
-		
-		frame  = getImage(getDocumentBase(), "img/frame.png");		//フレーム
-		random = getImage(getDocumentBase(), "img/random.gif");		//ランダム
-		
+
 		//コンピュータの手
-		compG = new Image[3];
-		compG[0] = getImage(getDocumentBase(), "img/gu.png");		//グー
-		compG[1] = getImage(getDocumentBase(), "img/tyoki.png");	//チョキ
-		compG[2] = getImage(getDocumentBase(), "img/pa.png");		//パー
+		compG = new Image[4];
+		compG[0] = getImage(getDocumentBase(), "../img/gu.png");		//グー
+		compG[1] = getImage(getDocumentBase(), "../img/tyoki.png");		//チョキ
+		compG[2] = getImage(getDocumentBase(), "../img/pa.png");		//パー
+		compG[3] = getImage(getDocumentBase(), "../img/random.gif");	//ランダム
 		
-//		//フレーム(ユーザーの手)
-//		userG = new Image[3];
-//		userG[0] = getImage(getDocumentBase(), "img/");		//グー
-//		userG[1] = getImage(getDocumentBase(), "img/");		//チョキ
-//		userG[2] = getImage(getDocumentBase(), "img/");		//パー
+		//フレーム(ユーザーの手)
+		frame = new Image[4];
+		frame[0] = getImage(getDocumentBase(), "../img/");			//グー
+		frame[1] = getImage(getDocumentBase(), "../img/");			//チョキ
+		frame[2] = getImage(getDocumentBase(), "../img/");			//パー
+		frame[3] = getImage(getDocumentBase(), "../img/pa.png");	//ノーマル
 	}
 	
 	
@@ -68,11 +66,6 @@ public class Jankengame extends Applet {
 //			case 1: win++;		break;	//勝ち
 //			case 2: rose++;		break;	//負け
 //			}
-			
-			try{
-				  Thread.sleep(500);
-				}catch (InterruptedException e){
-			}
 		}
 //		
 		// 結果
