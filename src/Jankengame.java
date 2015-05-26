@@ -19,10 +19,11 @@ public class Jankengame extends Applet implements ActionListener {
 		
 		//フレーム
 		FRAME = getImage(getDocumentBase(), "../img/frame_normal.png");		//初期値
-		frame = new Image[3];
-		frame[0]  = getImage(getDocumentBase(), "../img/frame_normal.png");	//通常
-		frame[1]  = getImage(getDocumentBase(), "../img/frame_win.png");	//勝ち
-		frame[2]  = getImage(getDocumentBase(), "../img/frame_lose.png");	//負け
+		frame = new Image[4];
+		frame[0] = getImage(getDocumentBase(), "../img/frame_draw.png");	//あいこ
+		frame[1] = getImage(getDocumentBase(), "../img/frame_lose.png");	//負け
+		frame[2] = getImage(getDocumentBase(), "../img/frame_win.png");		//勝ち
+		frame[3] = getImage(getDocumentBase(), "../img/frame_normal.png");	//通常
 		
 		//コンピュータの手
 		COMPg = getImage(getDocumentBase(), "../img/gu.png");			//初期値
@@ -63,45 +64,52 @@ public class Jankengame extends Applet implements ActionListener {
 	  }
 	
 	//結果
-		void result(int user) {
-			// コンピュータの手を生成
-			Random rand = new Random();	
-			int comp = rand.nextInt(3);		
-			COMPg = compG[comp];
-			repaint();
-			
-			// 判定
-			int judge = (comp - user + 3) % 3;
-			switch (judge) {
-			case 0: break;
-			case 1: FRAME = frame[judge];	//勝ち
-					repaint();
-					break;
-			case 2: FRAME = frame[judge];	//負け
-					repaint();
-					break;			
-			}
+	void result(int user) {
+		// コンピュータの手を生成
+		Random rand = new Random();	
+		int comp = rand.nextInt(3);		
+		COMPg = compG[comp];
+		repaint();
+		
+		// 判定
+		int judge = (comp - user + 3) % 3;
+		switch (judge) {
+		case 0: FRAME = frame[judge];	//あいこ
+				repaint();
+				break;
+		case 1: FRAME = frame[judge];	//勝ち
+				repaint();
+				break;
+		case 2: FRAME = frame[judge];	//負け
+				repaint();
+				break;			
 		}
+	}
 
 	//メイン
 	public void actionPerformed(ActionEvent e) {
 		//スタートボタン押下でゲーム開始
 		if (e.getSource() == start) {
 			
-			//ユーザーの手(ランダム)を表示
+			FRAME = frame[3];	//通常
+			COMPg = compG[3];	//ランダム
+			repaint();
+		}
+		
+		// ユーザーの手を読み込み
+		else if(e.getSource() == gu)	{	//グー
+			result(0);
+		}
+		else if(e.getSource() == pa) {		//パー
+			result(1);
+		}
+		else if(e.getSource() == tyoki) {	//チョキ
+			result(2);
+		}
+		else {
 			COMPg = compG[3];
 			repaint();
-			
-			// ユーザーの手を読み込み
-			if(e.getSource() == gu)				result(0);
-			else if(e.getSource() == pa)		result(1);
-			else if(e.getSource() == tyoki)		result(2);
-//			else {
-//				COMPg = compG[3];
-//				repaint();
-//			}
 		}
-		else g.drawImage(frame[0], 0, 0, this);
 	}
 }
 
