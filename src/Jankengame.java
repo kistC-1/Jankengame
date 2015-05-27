@@ -1,69 +1,128 @@
-/* 「ジャンケンゲーム」
- * 3回勝負
- * 0…グー / 1…チョキ / 2…パー
- */
+/* 「ジャンケンゲーム」 */
 
 import java.applet.Applet;
 import java.awt.*;
-import java.util.Scanner;
+import java.awt.event.*;
 import java.util.Random;
 
-public class Jankengame extends Applet {
+
+public class Jankengame extends Applet implements ActionListener {
+	Image FRAME, COMPg;
+	Image[] frame, compG;
+	Button start, gu, tyoki, pa;
+	Graphics g = getGraphics();
 	
 	//アプレットの初期化
 	public void init() {
-		//アプレットの背景色の指定
+		//背景
 		setBackground(new Color(255, 255, 255));
-	}
-	
-	public void paint(Graphics g) {
+		
+		//フレーム
+		FRAME = getImage(getDocumentBase(), "../img/frame_normal.png");		//初期値
+		frame = new Image[4];
+		frame[0] = getImage(getDocumentBase(), "../img/frame_draw.png");	//あいこ
+		frame[1] = getImage(getDocumentBase(), "../img/frame_lose.png");	//負け
+		frame[2] = getImage(getDocumentBase(), "../img/frame_win.png");		//勝ち
+		frame[3] = getImage(getDocumentBase(), "../img/frame_normal.png");	//通常
+		
 		//コンピュータの手
-		Image Crandom = getImage(getDocumentBase(), "img/random.gif");
-		Image Cpaper = getImage(getDocumentBase(), "img/paper.jpg");
-		Image Cscissors = getImage(getDocumentBase(), "img/scissors.jpg");
-		Image Cstone = getImage(getDocumentBase(), "img/stone.jpg");
+		COMPg = getImage(getDocumentBase(), "../img/gu.png");			//初期値
+		compG = new Image[4];
+		compG[0] = getImage(getDocumentBase(), "../img/gu.png");		//グー
+		compG[1] = getImage(getDocumentBase(), "../img/pa.png");		//パー
+		compG[2] = getImage(getDocumentBase(), "../img/tyoki.png");		//チョキ
+		compG[3] = getImage(getDocumentBase(), "../img/random.gif");	//ランダム
 		
-		//画像の描画
-		g.drawImage(Crandom, 20, 10, this);
+		
+		//ユーザの手
+		setLayout(null);
+		start  = new Button("スタート");
+		add(start);
+		start.setBounds(525, 680, 55, 85);
+		start.addActionListener(this);
+		
+		gu  = new Button("グー");
+		add(gu);
+		gu.setBounds(90, 780, 60, 30);
+		gu.addActionListener(this);
+		gu.setEnabled(false);
+		
+		pa = new Button("パー");
+		add(pa);
+		pa.setBounds(250, 780, 60, 30);
+		pa.addActionListener(this);
+		pa.setEnabled(false);
+		
+		tyoki = new Button("チョキ");
+		add(tyoki);
+		tyoki.setBounds(420, 780, 60, 30);
+		tyoki.addActionListener(this);
+		tyoki.setEnabled(false);
 	}
 	
+	//画像の描写
+	public void paint(Graphics g){
+		g.drawImage(FRAME, 0, 0, this);
+		g.drawImage(COMPg, 0, -103, this);
+	}
 	
+	//画像の更新
+	public void update(Graphics g) {
+		paint(g);
+	}
 	
-	
-	public static void main(String[] args) {
-		Scanner stdIn = new Scanner(System.in);
-		Random rand = new Random();
+	//結果
+	void result(int user) {
+		// コンピュータの手を生成
+		Random rand = new Random();	
+		int comp = rand.nextInt(3);
+		COMPg = compG[comp];
+		repaint();
 		
-		int win = 0, rose = 0;
-
-		// 3回勝負
-		for (int count = 0; count < 3; count++) {
-			// コンピュータの手を生成
-			int comp = rand.nextInt(3);		//scriptに伝える
-			
-			// プレイヤーの手を読み込む
-			int user;
-			do {
-				user = stdIn.nextInt();			//scriptから読み込むには？
-			} while (user < 0 || user > 2);		
-			
-			// 判定
-			int judge = (comp - user + 3) % 3;
-			switch (judge) {
-			case 0: break;				//あいこ
-			case 1: win++;		break;	//勝ち
-			case 2: rose++;		break;	//負け
-			}
+		// 判定
+		int judge = (comp - user + 3) % 3;
+		switch (judge) {
+		case 0: FRAME = frame[judge];	//あいこ
+				repaint();
+				break;
+		case 1: FRAME = frame[judge];	//勝ち
+				repaint();
+				break;
+		case 2: FRAME = frame[judge];	//負け
+				repaint();
+				break;			
 		}
 		
-		// 結果
-		if (win > rose)
-			System.out.println("win");
-		else if (win < rose)
-			System.out.println("rose");
-		else
-			System.out.println("draw");
+		//ユーザーの手を無効化
+		gu.setEnabled(false);
+		pa.setEnabled(false);
+		tyoki.setEnabled(false);
+	}
+
+	//メイン
+	public void actionPerformed(ActionEvent e) {
+		//スタートボタン押下でゲーム開始
+		if (e.getSource() == start) {
+			FRAME = frame[3];	//通常
+			COMPg = compG[3];	//ランダム
+			repaint();
+			
+			//ユーザーの手を有効化
+			gu.setEnabled(true);
+			pa.setEnabled(true);
+			tyoki.setEnabled(true);
+		}
 		
-		stdIn.close();
+			// ユーザーの手を読み込み
+		else if (e.getSource() == gu) {			//グー
+				result(0);
+		}
+		else if (e.getSource() == pa) {			//パー
+			result(1);
+		}
+		else if (e.getSource() == tyoki) {		//チョキ
+			result(2);
+		}
 	}
 }
+
