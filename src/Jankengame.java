@@ -45,29 +45,37 @@ public class Jankengame extends Applet implements ActionListener {
 		add(gu);
 		gu.setBounds(90, 780, 60, 30);
 		gu.addActionListener(this);
+		gu.setEnabled(false);
 		
 		pa = new Button("パー");
 		add(pa);
 		pa.setBounds(250, 780, 60, 30);
 		pa.addActionListener(this);
+		pa.setEnabled(false);
 		
 		tyoki = new Button("チョキ");
 		add(tyoki);
 		tyoki.setBounds(420, 780, 60, 30);
 		tyoki.addActionListener(this);
+		tyoki.setEnabled(false);
 	}
 	
 	//画像の描写
 	public void paint(Graphics g){
 		g.drawImage(FRAME, 0, 0, this);
-		g.drawImage(COMPg, 0, -102, this);
-	  }
+		g.drawImage(COMPg, 0, -103, this);
+	}
+	
+	//画像の更新
+	public void update(Graphics g) {
+		paint(g);
+	}
 	
 	//結果
 	void result(int user) {
 		// コンピュータの手を生成
 		Random rand = new Random();	
-		int comp = rand.nextInt(3);		
+		int comp = rand.nextInt(3);
 		COMPg = compG[comp];
 		repaint();
 		
@@ -84,31 +92,36 @@ public class Jankengame extends Applet implements ActionListener {
 				repaint();
 				break;			
 		}
+		
+		//ユーザーの手を無効化
+		gu.setEnabled(false);
+		pa.setEnabled(false);
+		tyoki.setEnabled(false);
 	}
 
 	//メイン
 	public void actionPerformed(ActionEvent e) {
 		//スタートボタン押下でゲーム開始
 		if (e.getSource() == start) {
-			
 			FRAME = frame[3];	//通常
 			COMPg = compG[3];	//ランダム
 			repaint();
+			
+			//ユーザーの手を有効化
+			gu.setEnabled(true);
+			pa.setEnabled(true);
+			tyoki.setEnabled(true);
 		}
 		
-		// ユーザーの手を読み込み
-		else if(e.getSource() == gu)	{	//グー
-			result(0);
+			// ユーザーの手を読み込み
+		else if (e.getSource() == gu) {			//グー
+				result(0);
 		}
-		else if(e.getSource() == pa) {		//パー
+		else if (e.getSource() == pa) {			//パー
 			result(1);
 		}
-		else if(e.getSource() == tyoki) {	//チョキ
+		else if (e.getSource() == tyoki) {		//チョキ
 			result(2);
-		}
-		else {
-			COMPg = compG[3];
-			repaint();
 		}
 	}
 }
