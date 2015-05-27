@@ -38,7 +38,7 @@ public class Jankengame extends Applet implements ActionListener {
 		setLayout(null);
 		start  = new Button("スタート");
 		add(start);
-		start.setBounds(535, 680, 45, 85);
+		start.setBounds(525, 680, 55, 85);
 		start.addActionListener(this);
 		
 		gu  = new Button("グー");
