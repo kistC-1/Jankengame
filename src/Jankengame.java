@@ -11,7 +11,7 @@ public class Jankengame extends Applet implements ActionListener {
 	Image FRAME, COMPg;
 	Image[] frame, compG;
 	Button start, gu, tyoki, pa;
-	AudioClip jan, pon;
+	AudioClip BGM, jan, pon;
 	Graphics g = getGraphics();
 	
 	//アプレットの初期化
@@ -60,9 +60,13 @@ public class Jankengame extends Applet implements ActionListener {
 		tyoki.addActionListener(this);
 		tyoki.setEnabled(false);
 		
-		//音声
+		//音
+		BGM = getAudioClip(getDocumentBase(), "../Scene9.wav");	//BGM
 		jan = getAudioClip(getDocumentBase(), "../se/Janken.wav");	//ジャンケン
-		pon = getAudioClip(getDocumentBase(), "../se/pon.wav");	//ポン
+		pon = getAudioClip(getDocumentBase(), "../se/pon.wav");		//ポン
+		
+		//BGM再生
+		BGM.loop();
 	}
 	
 	//画像の描写
