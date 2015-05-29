@@ -61,8 +61,8 @@ public class Jankengame extends Applet implements ActionListener {
 		tyoki.setEnabled(false);
 		
 		//音声
-		jan = getAudioClip(getDocumentBase(), "../audio/");	//ジャンケン
-		pon = getAudioClip(getDocumentBase(), "../audio/");	//ポン
+		jan = getAudioClip(getDocumentBase(), "../se/Janken.wav");	//ジャンケン
+		pon = getAudioClip(getDocumentBase(), "../se/pon.wav");	//ポン
 	}
 	
 	//画像の描写
