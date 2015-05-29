@@ -106,7 +106,7 @@ public class Jankengame extends Applet implements ActionListener {
 		tyoki.setEnabled(false);
 	}
 
-	//メイン
+	//本体
 	public void actionPerformed(ActionEvent e) {
 		//スタートボタン押下でゲーム開始
 		if (e.getSource() == start) {
@@ -133,5 +133,21 @@ public class Jankengame extends Applet implements ActionListener {
 			result(2);
 		}
 	}
+
+	
+	//メイン
+	public static void main(String args[]) {
+	    Applet applet=new Jankengame();
+
+	    applet.init();	//初期化
+
+	    Frame f=new Frame();
+	    f.addWindowListener(new WindowAdapter() {
+	      public void windowClosing(WindowEvent evt) {System.exit(0);}
+	    });
+	    f.add(applet);
+	    f.setSize(600,850);
+	    f.show();
+	  }
 }
 
