@@ -2,6 +2,7 @@
 
 import java.applet.Applet;
 import java.awt.*;
+import java.applet.AudioClip;
 import java.awt.event.*;
 import java.util.Random;
 
@@ -10,6 +11,7 @@ public class Jankengame extends Applet implements ActionListener {
 	Image FRAME, COMPg;
 	Image[] frame, compG;
 	Button start, gu, tyoki, pa;
+	AudioClip jan, pon;
 	Graphics g = getGraphics();
 	
 	//アプレットの初期化
@@ -32,7 +34,6 @@ public class Jankengame extends Applet implements ActionListener {
 		compG[1] = getImage(getDocumentBase(), "../img/pa.png");		//パー
 		compG[2] = getImage(getDocumentBase(), "../img/tyoki.png");		//チョキ
 		compG[3] = getImage(getDocumentBase(), "../img/random.gif");	//ランダム
-		
 		
 		//ユーザの手
 		setLayout(null);
@@ -58,6 +59,10 @@ public class Jankengame extends Applet implements ActionListener {
 		tyoki.setBounds(420, 780, 60, 30);
 		tyoki.addActionListener(this);
 		tyoki.setEnabled(false);
+		
+		//音声
+		jan = getAudioClip(getDocumentBase(), "../se/Janken.wav");	//ジャンケン
+		pon = getAudioClip(getDocumentBase(), "../se/pon.wav");	//ポン
 	}
 	
 	//画像の描写
@@ -73,6 +78,8 @@ public class Jankengame extends Applet implements ActionListener {
 	
 	//結果
 	void result(int user) {
+		pon.play();	//音声(ポン)
+		
 		// コンピュータの手を生成
 		Random rand = new Random();	
 		int comp = rand.nextInt(3);
@@ -106,6 +113,8 @@ public class Jankengame extends Applet implements ActionListener {
 			FRAME = frame[3];	//通常
 			COMPg = compG[3];	//ランダム
 			repaint();
+			
+			jan.play();	//音声(ジャンケン)
 			
 			//ユーザーの手を有効化
 			gu.setEnabled(true);
