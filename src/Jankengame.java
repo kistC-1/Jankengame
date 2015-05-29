@@ -134,20 +134,11 @@ public class Jankengame extends Applet implements ActionListener {
 		}
 	}
 
-	
-	//ƒƒCƒ“
 	public static void main(String args[]) {
 	    Applet applet=new Jankengame();
 
-	    applet.init();	//‰Šú‰»
+	    applet.init();
 
-	    Frame f=new Frame();
-	    f.addWindowListener(new WindowAdapter() {
-	      public void windowClosing(WindowEvent evt) {System.exit(0);}
-	    });
-	    f.add(applet);
-	    f.setSize(600,850);
-	    f.show();
 	  }
 }
 
